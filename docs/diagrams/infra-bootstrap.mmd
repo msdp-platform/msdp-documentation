@@ -1,0 +1,8 @@
+%% Infra Bootstrap (Terraform → AKS → ArgoCD)
+flowchart TD
+  I[workflow_dispatch] --> P[Terraform Plan/Apply]
+  P --> R[VNet + ACR + AKS]
+  R --> K[Export kubeconfig]
+  K --> A[Install ArgoCD]
+  A --> G[Point to GitOps app-of-apps]
+  G --> S[ArgoCD manages apps]

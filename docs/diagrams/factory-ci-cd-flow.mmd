@@ -1,0 +1,9 @@
+%% Factory CI/CD (Phase 1 MVP)
+flowchart LR
+  A[Developer Push] --> B[GitHub Actions]
+  B --> C[Lint & Unit Tests]
+  C --> D[Build Docker Image]
+  D --> E[Push to ACR]
+  E --> F[Update GitOps (values tag)]
+  F --> G[ArgoCD Sync]
+  G --> H[AKS Deploy]
