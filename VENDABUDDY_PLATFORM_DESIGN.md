@@ -2,32 +2,43 @@
 
 ## 🎯 **Platform Overview**
 
-**VendaBuddy** is a comprehensive merchant management platform powered by MSDP infrastructure, designed to serve POS systems and street food vendors with a Shopify-like experience.
+**VendaBuddy** is a comprehensive workforce marketplace platform powered by MSDP infrastructure, designed like Shopify but for job/workforce suppliers - similar to Limber but with broader scope.
 
 ### **Mission Statement**
-"Empowering local businesses - from UK POS systems to India street food corners - with professional tools to succeed in the digital marketplace."
+"Empowering workforce suppliers and job providers - from UK gig workers to India street vendors - by hosting their services on a unified marketplace platform."
+
+### **Platform Concept**
+Just as **Shopify hosts e-commerce stores**, **VendaBuddy hosts workforce suppliers**:
+- **Service Providers** create their "storefronts" for services
+- **Customers** browse and book services/jobs
+- **VendaBuddy** provides the infrastructure and tools
+- **MSDP** powers the backend marketplace technology
 
 ## 🌍 **Target Markets**
 
 ### **Primary Markets:**
-1. **UK Remote POS Systems**
-   - Small retail stores
-   - Cafes and restaurants
-   - Mobile vendors
-   - Pop-up shops
-
-2. **India Street Food & Local Stores**
-   - Street food vendors
-   - Local kirana stores
-   - Small restaurants
+1. **UK Workforce Suppliers**
+   - Freelance professionals
+   - Gig economy workers
    - Service providers
+   - Skilled tradespeople
+   - Remote workers
 
-### **Business Types Supported:**
-- 🍕 **Food & Beverage**: Restaurants, street food, cafes
-- 🛍️ **Retail**: Local stores, shops, boutiques
-- 🧹 **Services**: Cleaning, repair, delivery
-- 🚚 **Logistics**: Delivery services, transport
-- 📱 **Mobile**: Pop-up vendors, mobile services
+2. **India Service Providers**
+   - Street food vendors (as service providers)
+   - Local service workers
+   - Skilled craftspeople
+   - Home-based businesses
+   - Freelance professionals
+
+### **Service Categories Supported:**
+- 🍕 **Food Services**: Street food, catering, meal delivery
+- 🧹 **Home Services**: Cleaning, maintenance, repairs
+- 🚚 **Logistics**: Delivery, moving, transport
+- 💻 **Digital Services**: Design, development, marketing
+- 🔧 **Professional Services**: Consulting, training, support
+- 🎨 **Creative Services**: Photography, events, content
+- 📱 **On-Demand**: Quick tasks, errands, assistance
 
 ## 🏗️ **Platform Architecture**
 
