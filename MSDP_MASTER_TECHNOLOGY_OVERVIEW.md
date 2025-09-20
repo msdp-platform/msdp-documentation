@@ -175,12 +175,14 @@ graph TB
             AI2[Infrastructure Agent<br/>Optimizes resource allocation]
             AI3[Customer Service Agent<br/>Handles support workflows]
             AI4[Compliance Agent<br/>Ensures regulatory compliance]
+            AI5[Workflow & Template Agent<br/>Generates N8N workflows & templates]
         end
         
         N8N --> AI1
         N8N --> AI2
         N8N --> AI3
         N8N --> AI4
+        N8N --> AI5
     end
 
     subgraph "🏗️ DevOps Automation"
@@ -225,6 +227,7 @@ graph TB
     AI2 -.->|Resource Optimization| CP
     AI3 -.->|Automated Support| US
     AI4 -.->|Compliance Checks| MS
+    AI5 -.->|Template Generation| N8N
 ```
 
 ### **DevOps Flow (Infrastructure Automation)**
@@ -396,6 +399,7 @@ graph TB
 | **Customer Service Agent** | Support automation, issue resolution | User Service, Order Service | - Handle common inquiries<br/>- Escalate complex issues<br/>- Provide 24/7 support |
 | **Compliance Agent** | Regulatory compliance, risk management | All Services | - Check regulatory requirements<br/>- Ensure data compliance<br/>- Monitor risk factors |
 | **Operations Agent** | Process optimization, efficiency | N8N Workflows, All Services | - Optimize workflows<br/>- Reduce manual tasks<br/>- Improve response times |
+| **Workflow & Template Agent** | N8N workflow generation, template creation | N8N Engine, Backstage Templates | - Generate N8N workflows from requirements<br/>- Create reusable workflow templates<br/>- Auto-generate documentation |
 
 ---
 
@@ -887,6 +891,29 @@ if (infraAnalysis.scaleRecommendation) {
 }
 ```
 
+#### **Workflow & Template Generation Agent**
+```javascript
+// N8N Custom Node: Workflow & Template Generation Agent
+const workflowGeneration = await openai.chat.completions.create({
+  model: "gpt-4",
+  messages: [{
+    role: "system",
+    content: `You are an expert N8N workflow generator. Create complete N8N workflows based on business requirements. Generate JSON workflow definitions that include nodes, connections, and configurations.`
+  }, {
+    role: "user",
+    content: `Generate an N8N workflow for: ${businessRequirement}
+    Integration points: ${integrationPoints}
+    Expected outcomes: ${expectedOutcomes}`
+  }]
+});
+
+// Auto-deploy generated workflow
+if (workflowGeneration.workflow) {
+  await deployN8NWorkflow(workflowGeneration.workflow);
+  await updateBackstageTemplate(workflowGeneration.template);
+}
+```
+
 ### **Step 3: Real-World Use Cases**
 
 #### **Use Case 1: Singapore Food Service Expansion**
@@ -969,6 +996,7 @@ Your existing N8N workflows can be enhanced with AI agents:
 2. **Location Enablement Workflow** → Add AI infrastructure optimization
 3. **Payment Processing Workflow** → Add AI fraud detection
 4. **Customer Support Workflow** → Add AI response generation
+5. **Workflow Generation** → AI-powered template and workflow creation
 
 ### **Step 6: Monitoring AI Agent Performance**
 
