@@ -20,15 +20,18 @@ The Multi-Service Delivery Platform (MSDP) is a complete, production-ready micro
 
 ---
 
-## 🌐 **Complete Technology Stack & Flowchart**
+### **Complete Platform Architecture**
 
 ```mermaid
 graph TB
-    subgraph "👥 User Layer"
-        CW[Customer Web Apps<br/>Next.js 15]
-        CM[Customer Mobile<br/>React Native/Expo]
-        MW[Merchant Portal<br/>VendaBuddy]
-        AD[Admin Dashboard<br/>Platform Management]
+    subgraph "🌐 Frontend Applications Layer"
+        CA["🌍 Customer Web App<br/>━━━━━━━━━━━━━━━<br/>Technology: Next.js 15<br/>Port: 4002<br/>Purpose: Shopping Experience"]
+        
+        CMA["📱 Customer Mobile App<br/>━━━━━━━━━━━━━━━<br/>Technology: React Native/Expo<br/>Port: 8090<br/>Purpose: Mobile Shopping"]
+        
+        AA["👨‍💼 Admin Dashboard<br/>━━━━━━━━━━━━━━━<br/>Technology: Next.js 15<br/>Port: 4000<br/>Purpose: Platform Management"]
+        
+        VA["🏪 VendaBuddy Frontend<br/>━━━━━━━━━━━━━━━<br/>Technology: React/Vue<br/>Port: 4001<br/>Purpose: Merchant Operations"]
     end
 
     subgraph "🌐 API & Gateway Layer"
