@@ -1,4 +1,6 @@
-# VendaBuddy Business Requirements Document
+# VendaBuddy Business Requirements & Platform Design
+
+> 📖 **See Also**: [MSDP Master Technology Overview](./MSDP_MASTER_TECHNOLOGY_OVERVIEW.md) for complete architecture and technology stack details.
 
 ## 🎯 **Executive Summary**
 

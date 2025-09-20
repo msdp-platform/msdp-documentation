@@ -1,4 +1,6 @@
-# Addon Pipeline Integration Proposal: Backstage & Crossplane
+# MSDP Addon Pipeline Integration Proposal
+
+> 📖 **See Also**: [MSDP Master Technology Overview](./MSDP_MASTER_TECHNOLOGY_OVERVIEW.md) for complete architecture and technology stack details.
 
 ## 🎯 **Integration Strategy**
 

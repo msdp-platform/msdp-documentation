@@ -1,5 +1,7 @@
 # MSDP + Backstage: Complete Architecture View
 
+> 📖 **See Also**: [MSDP Master Technology Overview](./MSDP_MASTER_TECHNOLOGY_OVERVIEW.md) for complete architecture and technology stack details.
+
 ## 🏗️ **Current MSDP Architecture (Without Backstage)**
 
 ```
