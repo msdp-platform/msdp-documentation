@@ -340,6 +340,234 @@ graph LR
 
 ---
 
+## 🌐 **Frontend Application Ecosystem**
+
+### **AI-Enhanced Frontend Generation**
+```yaml
+Frontend Categories:
+  🎨 Customer Experience Applications:
+    - Multi-Country Web Apps (Next.js 15)
+      • customer-app (Main): Port 4002
+      • customer-app-usa: Port 5001
+      • customer-app-uk: Port 5003
+      • customer-app-india: Port 5002
+    - Mobile Applications (React Native/Expo)
+      • customer-mobile: Port 8090
+      • Cross-platform (iOS/Android/Web)
+      • Offline-first architecture
+    
+  🏢 Business Management Applications:
+    - Admin Dashboard (Next.js 15): Port 4000
+      • Platform management interface
+      • AI service generation portal
+      • Real-time monitoring dashboards
+    - Merchant Portal (React): Port 4001
+      • VendaBuddy business operations
+      • Order management and analytics
+      • AI-powered business insights
+    
+  🤖 AI-Generated Frontend Components:
+    - Dynamic UI generation based on service APIs
+    - Automatic form generation from data schemas
+    - Responsive design patterns
+    - Accessibility compliance (WCAG 2.1)
+    - Multi-language support (i18n)
+```
+
+### **Frontend Architecture Pattern**
+```mermaid
+graph TB
+    subgraph "🎨 Frontend Layer"
+        subgraph "Customer Applications"
+            CW[Customer Web Apps<br/>Next.js 15 + TypeScript]
+            CM[Customer Mobile<br/>React Native/Expo]
+        end
+        
+        subgraph "Business Applications"
+            AD[Admin Dashboard<br/>AI Service Portal]
+            MP[Merchant Portal<br/>VendaBuddy Interface]
+        end
+        
+        subgraph "AI-Generated UIs"
+            DUI[Dynamic UI Components<br/>Auto-generated from APIs]
+            AIF[AI Forms<br/>Schema-driven generation]
+        end
+    end
+    
+    subgraph "🔗 API Integration Layer"
+        AG[API Gateway<br/>Central routing & auth]
+        GQL[GraphQL Federation<br/>Unified data layer]
+        REST[REST APIs<br/>Service endpoints]
+    end
+    
+    subgraph "🧩 Shared Frontend Infrastructure"
+        SC[Shared Components<br/>@msdp/ui-components]
+        AC[API Clients<br/>@msdp/api-client]
+        AU[Auth Utils<br/>@msdp/auth]
+        VS[Validation Schemas<br/>@msdp/validation]
+    end
+    
+    CW --> AG
+    CM --> AG
+    AD --> AG
+    MP --> AG
+    DUI --> AG
+    AIF --> AG
+    
+    AG --> GQL
+    AG --> REST
+    
+    CW --> SC
+    CM --> SC
+    AD --> SC
+    MP --> SC
+    
+    CW --> AC
+    CM --> AC
+    AD --> AC
+    MP --> AC
+```
+
+---
+
+## 🔗 **API Management & Gateway Architecture**
+
+### **Intelligent API Gateway System**
+```yaml
+API Gateway Features:
+  🚀 Core Capabilities:
+    - Centralized routing (Port 3000)
+    - Authentication & authorization (JWT)
+    - Rate limiting & throttling
+    - Request/response transformation
+    - Circuit breaker patterns
+    - Load balancing & failover
+    
+  🤖 AI-Enhanced Features:
+    - Intelligent routing based on load
+    - Predictive scaling triggers
+    - Anomaly detection & alerting
+    - Auto-generated API documentation
+    - Smart caching strategies
+    - Performance optimization suggestions
+    
+  🔐 Security & Compliance:
+    - OAuth 2.0 / OpenID Connect
+    - API key management
+    - CORS policy enforcement
+    - Input validation & sanitization
+    - Audit logging & compliance
+    - DDoS protection
+```
+
+### **API Gateway Architecture**
+```mermaid
+graph TB
+    subgraph "🌐 Client Layer"
+        WEB[Web Applications]
+        MOB[Mobile Applications]
+        API[External API Clients]
+        B2B[B2B Integrations]
+    end
+    
+    subgraph "🔗 API Gateway Layer (Port 3000)"
+        subgraph "Gateway Core"
+            RT[Request Router<br/>Intelligent routing]
+            AU[Authentication<br/>JWT validation]
+            RL[Rate Limiter<br/>Throttling & quotas]
+            TR[Transformer<br/>Request/response mapping]
+        end
+        
+        subgraph "AI-Enhanced Features"
+            LB[Smart Load Balancer<br/>AI-driven distribution]
+            CB[Circuit Breaker<br/>Failure detection]
+            CA[Intelligent Cache<br/>Predictive caching]
+            AN[Anomaly Detection<br/>Security monitoring]
+        end
+    end
+    
+    subgraph "🏗️ Backend Services"
+        US[User Service<br/>Port 3003]
+        OS[Order Service<br/>Port 3006]
+        PS[Payment Service<br/>Port 3007]
+        MS[Merchant Service<br/>Port 3002]
+        AS[Admin Service<br/>Port 3005]
+        LS[Location Service<br/>Port 3001]
+        GS[AI-Generated Services<br/>Dynamic ports]
+    end
+    
+    subgraph "📊 Observability"
+        PR[Prometheus<br/>Metrics collection]
+        GR[Grafana<br/>Dashboards]
+        JA[Jaeger<br/>Distributed tracing]
+        EL[ELK Stack<br/>Centralized logging]
+    end
+    
+    WEB --> RT
+    MOB --> RT
+    API --> RT
+    B2B --> RT
+    
+    RT --> AU
+    AU --> RL
+    RL --> TR
+    TR --> LB
+    LB --> CB
+    CB --> CA
+    CA --> AN
+    
+    AN --> US
+    AN --> OS
+    AN --> PS
+    AN --> MS
+    AN --> AS
+    AN --> LS
+    AN --> GS
+    
+    RT --> PR
+    AU --> PR
+    RL --> PR
+    LB --> PR
+    
+    PR --> GR
+    PR --> JA
+    PR --> EL
+```
+
+### **API Management Strategy**
+```yaml
+API Lifecycle Management:
+  🔄 Design & Development:
+    - OpenAPI 3.0 specification
+    - API-first development approach
+    - Contract testing & validation
+    - Mock server generation
+    - SDK auto-generation
+    
+  🚀 Deployment & Versioning:
+    - Blue-green API deployments
+    - Semantic versioning (v1, v2, etc.)
+    - Backward compatibility checks
+    - Deprecation management
+    - Migration assistance tools
+    
+  📊 Monitoring & Analytics:
+    - Real-time API metrics
+    - Usage analytics & insights
+    - Performance monitoring
+    - Error tracking & alerting
+    - Business KPI correlation
+    
+  🔐 Security & Governance:
+    - API security scanning
+    - Compliance validation
+    - Access control policies
+    - Data privacy enforcement
+    - Audit trail maintenance
+```
+
+---
+
 ## 📊 **Service Portfolio Management**
 
 ### **Port.io Service Catalog Integration**
@@ -359,8 +587,19 @@ Service Categories:
     - Location & Tracking Service
     - Merchant Management Service
     
+  🌐 Frontend Applications:
+    - Customer Web Applications (Multi-country)
+    - Mobile Applications (Cross-platform)
+    - Admin Dashboard & Management Portal
+    - Merchant Business Portal (VendaBuddy)
+    
+  🔗 API & Integration Services:
+    - API Gateway & Management
+    - GraphQL Federation Layer
+    - Webhook Management System
+    - B2B Integration Platform
+    
   🔧 Infrastructure Services:
-    - API Gateway
     - Monitoring & Alerting
     - Backup & Recovery
     - Security & Compliance
@@ -368,11 +607,13 @@ Service Categories:
 
 Service Metadata (Auto-Generated):
   ✅ API Documentation (OpenAPI)
+  ✅ Frontend Documentation (Storybook)
   ✅ Health Monitoring (Prometheus)
   ✅ Performance Metrics (SLI/SLO)
   ✅ Security Scanning (Automated)
   ✅ Dependency Mapping (Real-time)
   ✅ Cost Attribution (Per-service)
+  ✅ User Experience Metrics (Analytics)
 ```
 
 ### **Intelligent Service Governance**
