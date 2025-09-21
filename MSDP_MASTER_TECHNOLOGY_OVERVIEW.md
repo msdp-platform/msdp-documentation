@@ -435,7 +435,7 @@ graph TB
     subgraph "🇬🇧 Country Level - United Kingdom"
         UK_I[UK Infrastructure<br/>Azure UK South]
         UK_S[UK Services<br/>Localized for UK market]
-        UK_F[UK Frontend<br/>customer-app-uk (Port 5003)]
+        UK_F[UK Frontend<br/>customer-app-uk Port 5003]
         
         subgraph "🏙️ City Level - London"
             LON_Z1[Zone 1 Services<br/>Financial District]
@@ -452,7 +452,7 @@ graph TB
     subgraph "🇮🇳 Country Level - India"
         IN_I[India Infrastructure<br/>Azure Central India]
         IN_S[India Services<br/>Localized for Indian market]
-        IN_F[India Frontend<br/>customer-app-india (Port 5002)]
+        IN_F[India Frontend<br/>customer-app-india Port 5002]
         
         subgraph "🏙️ City Level - Mumbai"
             MUM_B[Mumbai Business<br/>Financial District]
@@ -465,10 +465,10 @@ graph TB
         end
     end
     
-    subgraph "🇩🇪 Country Level - Germany (New)"
+    subgraph "🇩🇪 Country Level - Germany New"
         DE_I[Germany Infrastructure<br/>Azure Germany West Central]
         DE_S[Germany Services<br/>AI-Generated for German market]
-        DE_F[Germany Frontend<br/>customer-app-germany (Auto-generated)]
+        DE_F[Germany Frontend<br/>customer-app-germany Auto-generated]
         
         subgraph "🏙️ City Level - Berlin"
             BER_M[Berlin Mitte<br/>Government District]
