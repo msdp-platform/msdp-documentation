@@ -66,9 +66,20 @@ graph TB
     end
     
     subgraph "🏗️ Application Layer"
-        CORE[Core Services<br/>User, Order, Payment, etc.]
-        FRONT[Frontend Applications<br/>Web, Mobile, Admin]
-        GEN[AI-Generated Services<br/>Dynamic Service Creation]
+        ADMIN[Admin Portal<br/>Core Service - Manual Build]
+        
+        subgraph "AI-Generated Services"
+            USER[User Service<br/>AI-Generated]
+            ORDER[Order Service<br/>AI-Generated]
+            PAYMENT[Payment Service<br/>AI-Generated]
+            API[API Gateway<br/>AI-Generated]
+            MERCHANT[Merchant Service<br/>AI-Generated]
+        end
+        
+        subgraph "AI-Generated Frontend"
+            CUSTOMER[Customer Apps<br/>AI-Generated Multi-Country]
+            VENDOR[Merchant Portal<br/>AI-Generated]
+        end
     end
     
     subgraph "🗄️ Data Layer"
@@ -84,12 +95,25 @@ graph TB
     ADDON --> PLAT
     PLAT --> MON
     
-    MON --> CORE
-    CORE --> FRONT
-    FRONT --> GEN
+    %% AI-Driven Service Generation Flow
+    N8N --> ADMIN
+    AI --> ADMIN
+    ADMIN --> USER
+    ADMIN --> ORDER
+    ADMIN --> PAYMENT
+    ADMIN --> API
+    ADMIN --> MERCHANT
     
-    CORE --> PG
-    CORE --> REDIS
+    %% AI-Generated Frontend Flow
+    ADMIN --> CUSTOMER
+    ADMIN --> VENDOR
+    
+    %% Data Layer Connections
+    USER --> PG
+    ORDER --> PG
+    PAYMENT --> PG
+    ADMIN --> PG
+    API --> REDIS
     AI --> VECTOR
     
     AKS --> VNET
@@ -121,9 +145,9 @@ Building Block Hierarchy:
     - AI Service Integration
     
   🚀 Application Blocks:
-    - Core Microservices
-    - Frontend Applications
-    - AI-Generated Services
+    - Admin Portal (Manual Build - Core Service)
+    - AI-Generated Microservices (User, Order, Payment, API Gateway, Merchant)
+    - AI-Generated Frontend Applications (Customer Apps, Merchant Portal)
     
   📊 Observability Blocks:
     - Monitoring & Alerting
