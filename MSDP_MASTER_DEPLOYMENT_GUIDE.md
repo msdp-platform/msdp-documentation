@@ -213,6 +213,131 @@ graph TD
 
 ---
 
+## 🔄 **AI-Driven Service Generation Flow**
+
+### **Complete End-to-End Workflow**
+```mermaid
+graph TD
+    subgraph "🎬 Business Layer"
+        ADMIN[Admin Portal<br/>Business Requirements Input]
+    end
+    
+    subgraph "🤖 AI Orchestration Layer"
+        N8N[N8N Cloud<br/>Workflow Orchestration]
+        PORT[Port.io<br/>Service Catalog Management]
+        WORKFLOW_GIT[GitHub Workflows Repo<br/>N8N Workflow Definitions]
+    end
+    
+    subgraph "🧠 AI Intelligence Layer"
+        AI_BIZ[Business Intelligence Agent<br/>GPT-4 Turbo]
+        AI_TECH[Technical Intelligence Agent<br/>Claude 3 Sonnet]
+        AI_OPS[Operational Intelligence Agent<br/>GPT-4 Turbo]
+        AI_CODE[Code Generation Agent<br/>GitHub Copilot + Custom AI]
+    end
+    
+    subgraph "📦 Repository Management"
+        SERVICE_REPO[Service Repository<br/>Generated Code]
+        FRONTEND_REPO[Frontend Repository<br/>Generated UI Code]
+        INFRA_REPO[Infrastructure Repository<br/>Generated K8s Manifests]
+        subgraph "Branch Strategy"
+            AI_BRANCH[ai-generated Branch<br/>Raw AI Output]
+            DEV_BRANCH[dev Branch<br/>Reviewed & Sanitized]
+            MAIN_BRANCH[main Branch<br/>Production Ready]
+        end
+    end
+    
+    subgraph "🚀 Deployment Pipeline"
+        CROSSPLANE[Crossplane<br/>Infrastructure Provisioning]
+        ARGOCD[ArgoCD<br/>GitOps Deployment]
+        DEV_AI_ENV[devAI Environment<br/>AI-Generated Services]
+        DEV_ENV[dev Environment<br/>Developer-Reviewed Services]
+        PROD_ENV[production Environment<br/>Production Services]
+    end
+    
+    subgraph "👨‍💻 Quality Assurance"
+        DEV_REVIEW[Developer Review<br/>Code Sanitization & Validation]
+        QUALITY_GATE[Quality Gates<br/>Tests, Security, Performance]
+    end
+    
+    %% Flow connections
+    ADMIN --> N8N
+    N8N --> PORT
+    N8N --> WORKFLOW_GIT
+    N8N --> AI_BIZ
+    N8N --> AI_TECH
+    N8N --> AI_OPS
+    
+    AI_BIZ --> AI_CODE
+    AI_TECH --> AI_CODE
+    AI_OPS --> AI_CODE
+    
+    AI_CODE --> SERVICE_REPO
+    AI_CODE --> FRONTEND_REPO
+    AI_CODE --> INFRA_REPO
+    
+    SERVICE_REPO --> AI_BRANCH
+    FRONTEND_REPO --> AI_BRANCH
+    INFRA_REPO --> AI_BRANCH
+    
+    AI_BRANCH --> CROSSPLANE
+    AI_BRANCH --> ARGOCD
+    CROSSPLANE --> DEV_AI_ENV
+    ARGOCD --> DEV_AI_ENV
+    
+    DEV_AI_ENV --> DEV_REVIEW
+    DEV_REVIEW --> QUALITY_GATE
+    QUALITY_GATE --> DEV_BRANCH
+    
+    DEV_BRANCH --> ARGOCD
+    ARGOCD --> DEV_ENV
+    DEV_ENV --> MAIN_BRANCH
+    MAIN_BRANCH --> PROD_ENV
+```
+
+### **Service Generation Timeline**
+```yaml
+AI-Driven Generation (7 minutes):
+  ⏰ 00:00 - Admin Portal: Business requirements submitted
+  ⏰ 00:30 - N8N Cloud: AI agents analyzing requirements  
+  ⏰ 02:00 - AI Agents: Code generation in progress
+  ⏰ 04:00 - GitHub: Code committed to ai-generated branches
+  ⏰ 04:30 - Crossplane: Infrastructure provisioning
+  ⏰ 06:00 - ArgoCD: Deploying to devAI environment
+  ⏰ 07:00 - ✅ devAI Environment: AI-generated service live!
+
+Developer Review & Promotion (1-3 weeks):
+  📧 07:01 - Developer Notification: "Service ready for review"
+  👨‍💻 Day 1-2 - Developer Review: Code sanitization and testing
+  ✅ Day 3 - Quality Gates: All checks passed
+  🚀 Day 3 - dev Environment: Reviewed service deployed
+  📊 Week 1-2 - Business Validation: Stakeholder testing
+  🌟 Week 3 - production Environment: Service goes live!
+```
+
+### **Branch Strategy & Environment Mapping**
+```yaml
+Repository Branch Strategy:
+  ai-generated Branch:
+    Purpose: Raw AI-generated code output
+    Deployment: devAI environment (automatic)
+    Access: https://service-name.devai.aztech-msdp.com
+    Duration: 7 minutes (AI generation)
+    
+  dev Branch:
+    Purpose: Developer-reviewed and sanitized code
+    Deployment: dev environment (after review)
+    Access: https://service-name.dev.aztech-msdp.com
+    Duration: 1-3 days (developer review)
+    
+  main Branch:
+    Purpose: Production-ready code
+    Deployment: production environment
+    Access: https://service-name.aztech-msdp.com
+    Duration: 1-3 weeks (business validation)
+```
+
+---
+
 ## 📋 **Deployment Phases & Roadmap**
 
 ### **Phase 1: Foundation Infrastructure (Week 1)**
@@ -517,18 +642,29 @@ Environment Hierarchy:
     - Secondary: Azure Central India
     - DNS: AWS Route53 Global
     - Monitoring: Cross-region
+    - Access: https://service-name.aztech-msdp.com
     
   🧪 Staging (Production-like):
     - Location: Azure UK South
     - Purpose: UAT and performance testing
     - Data: Production-like datasets
     - Monitoring: Full observability
+    - Access: https://service-name.staging.aztech-msdp.com
     
-  🔧 Development (Shared):
+  🔧 Development (Developer-Reviewed):
     - Location: Azure UK South
-    - Purpose: Team collaboration
+    - Purpose: Team collaboration & testing
     - Features: Hot reloading, debugging
     - Monitoring: Development metrics
+    - Access: https://service-name.dev.aztech-msdp.com
+    
+  🤖 devAI (AI-Generated Services):
+    - Location: Azure UK South
+    - Purpose: AI-generated service validation
+    - Features: Raw AI output, rapid iteration
+    - Monitoring: Basic health checks
+    - Access: https://service-name.devai.aztech-msdp.com
+    - Duration: Immediate (7 minutes from AI generation)
     
   💻 Local (Individual):
     - Platform: Docker Desktop / Kind
