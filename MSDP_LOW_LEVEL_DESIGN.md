@@ -5,20 +5,20 @@
 **Status**: 🎯 Technical Specification  
 **Purpose**: Detailed technical design for MSDP AI-driven service generation platform
 
-> **📋 Based on**: [MSDP Master Technology Overview](./MSDP_MASTER_TECHNOLOGY_OVERVIEW.md) - This document provides the detailed technical implementation of the architectural vision.
+> **📋 Based on**: [MSDP Master Deployment Guide](./MSDP_MASTER_DEPLOYMENT_GUIDE.md) - This document provides the detailed technical implementation of each deployment layer and building block.
 
 ---
 
 ## 🎯 **Executive Summary**
 
-This Low Level Design document translates the revolutionary AI-driven service generation platform from the Master Technology Overview into detailed technical specifications. It provides comprehensive API designs, data models, system interfaces, and implementation details required for the 7-minute service generation capability.
+This Low Level Design document provides the detailed technical specifications for each layer and building block defined in the MSDP Master Deployment Guide. It breaks down the "Deployment Architecture Overview" into implementable components with specific configurations, APIs, and integration patterns.
 
-### **Design Principles**
-- **API-First Design**: All components expose well-defined REST/GraphQL APIs
-- **Event-Driven Architecture**: Asynchronous communication via events and webhooks
-- **Microservice Patterns**: Loosely coupled, independently deployable services
-- **AI-Native Integration**: Built-in AI agent communication protocols
-- **Cloud-Native Design**: Kubernetes-ready with 12-factor app compliance
+### **Design Approach**
+- **Layer-by-Layer Breakdown**: Each deployment layer detailed with technical specifications
+- **Building Block Implementation**: Concrete technical details for each building block
+- **Integration Patterns**: Specific APIs and communication protocols between layers
+- **Configuration Management**: Detailed configuration for each component
+- **Deployment Specifications**: Kubernetes manifests and Terraform modules
 
 ---
 

@@ -32,18 +32,18 @@
 
 ## 📈 **Monthly Cost Scenarios**
 
-### **Scenario 1: All Premium Storage (Current Baseline)**
+### **Scenario 1: Optimized Premium Storage (RECOMMENDED)**
 
-#### **Infrastructure & Platform Components (6 × 5GB)**
-| Component | Storage | Monthly Cost |
-|-----------|---------|--------------|
-| Backstage | 5GB Premium | $0.75 |
-| N8N | 5GB Premium | $0.75 |
-| ArgoCD | 5GB Premium | $0.75 |
-| Prometheus | 5GB Premium | $0.75 |
-| Grafana | 5GB Premium | $0.75 |
-| Flowable | 5GB Premium | $0.75 |
-| **Subtotal** | **30GB** | **$4.50** |
+#### **Infrastructure & Platform Components (Optimized Sizes)**
+| Component | Storage | Monthly Cost | Rationale |
+|-----------|---------|--------------|-----------|
+| Backstage | 5GB Premium | $0.75 | Developer portal, full dataset |
+| N8N | 3GB Premium | $0.45 | Workflow automation, moderate data |
+| ArgoCD | 2GB Premium | $0.30 | GitOps configs, lightweight |
+| Prometheus | 1GB Premium | $0.15 | Metrics, short retention |
+| Grafana | 1GB Premium | $0.15 | Dashboard configs, minimal |
+| Flowable | 5GB Premium | $0.75 | BPM workflows, full dataset |
+| **Subtotal** | **17GB** | **$2.55** |
 
 #### **Business Applications (7 × 500MB)**
 | Component | Storage | Monthly Cost |
@@ -57,10 +57,10 @@
 | Customer App | 0.5GB Premium | $0.075 |
 | **Subtotal** | **3.5GB** | **$0.525** |
 
-#### **Total Premium Storage Cost**
-- **Total Storage**: 33.5GB
-- **Monthly Cost**: **$5.025**
-- **Annual Cost**: **$60.30**
+#### **Total Optimized Premium Storage Cost**
+- **Total Storage**: 20.5GB
+- **Monthly Cost**: **$3.075**
+- **Annual Cost**: **$36.90**
 
 ---
 
