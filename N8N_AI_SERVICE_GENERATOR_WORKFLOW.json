@@ -1,0 +1,353 @@
+{
+  "name": "MSDP AI Service Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-service",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Port.io Service Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "generate-service"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract business requirements from Port.io webhook\nconst payload = $input.all()[0].json;\n\n// Parse Port.io action data\nconst serviceData = {\n  name: payload.inputs?.service_name || payload.entity?.properties?.service_name,\n  type: payload.inputs?.service_type || payload.entity?.properties?.service_type,\n  requirements: payload.inputs?.business_requirements || payload.entity?.properties?.business_requirements,\n  team: payload.inputs?.team || payload.entity?.properties?.team,\n  environment: payload.inputs?.environment || payload.entity?.properties?.environment || 'dev',\n  entityId: payload.entity?.identifier,\n  userId: payload.user?.email\n};\n\n// Validate required fields\nif (!serviceData.name || !serviceData.type || !serviceData.requirements) {\n  throw new Error('Missing required fields: name, type, or requirements');\n}\n\n// Generate repository name\nserviceData.repoName = `msdp-${serviceData.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;\n\n// Set generation metadata\nserviceData.generationId = `gen-${Date.now()}`;\nserviceData.startTime = new Date().toISOString();\n\nreturn { serviceData };"
+      },
+      "id": "parse-request",
+      "name": "Parse Service Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "requestMethod": "PATCH",
+        "url": "https://api.getport.io/v1/entities/service/{{ $('Parse Service Request').item.json.serviceData.entityId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $vars.PORT_IO_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "properties.status",
+              "value": "generating"
+            },
+            {
+              "name": "properties.generated_at", 
+              "value": "{{ $('Parse Service Request').item.json.serviceData.startTime }}"
+            }
+          ]
+        }
+      },
+      "id": "update-status-generating",
+      "name": "Update Status: Generating",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "model": "gpt-4",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an expert software architect for MSDP platform. Analyze business requirements and generate detailed technical specifications."
+            },
+            {
+              "role": "user", 
+              "content": "Business Requirements: {{ $('Parse Service Request').item.json.serviceData.requirements }}\n\nService Type: {{ $('Parse Service Request').item.json.serviceData.type }}\n\nGenerate a detailed technical specification including:\n1. Service architecture\n2. API endpoints needed\n3. Database schema\n4. Dependencies\n5. Deployment configuration\n6. Testing strategy\n\nReturn as JSON with keys: architecture, endpoints, database, dependencies, deployment, testing"
+            }
+          ]
+        }
+      },
+      "id": "ai-analyze-requirements",
+      "name": "AI: Analyze Requirements", 
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI analysis response\nconst aiResponse = $input.all()[0].json.message.content;\nconst serviceData = $('Parse Service Request').item.json.serviceData;\n\nlet technicalSpec;\ntry {\n  technicalSpec = JSON.parse(aiResponse);\n} catch (e) {\n  // Fallback if AI doesn't return valid JSON\n  technicalSpec = {\n    architecture: aiResponse,\n    endpoints: [],\n    database: {},\n    dependencies: [],\n    deployment: {},\n    testing: {}\n  };\n}\n\n// Generate service template based on type\nconst templates = {\n  microservice: {\n    framework: 'express',\n    language: 'nodejs',\n    database: 'postgresql',\n    port: 3000 + Math.floor(Math.random() * 100)\n  },\n  frontend: {\n    framework: 'nextjs',\n    language: 'typescript',\n    port: 4000 + Math.floor(Math.random() * 100)\n  },\n  mobile: {\n    framework: 'react-native',\n    language: 'typescript',\n    platform: 'expo'\n  },\n  'shared-library': {\n    framework: 'npm',\n    language: 'typescript',\n    type: 'library'\n  }\n};\n\nconst template = templates[serviceData.type] || templates.microservice;\n\n// Combine everything\nconst enrichedService = {\n  ...serviceData,\n  technicalSpec,\n  template,\n  generatedCode: null\n};\n\nreturn { enrichedService };"
+      },
+      "id": "process-ai-analysis",
+      "name": "Process AI Analysis",
+      "type": "n8n-nodes-base.code", 
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "model": "gpt-4",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a senior developer for MSDP platform. Generate production-ready code based on technical specifications."
+            },
+            {
+              "role": "user",
+              "content": "Generate complete {{ $('Process AI Analysis').item.json.enrichedService.type }} code for:\n\nService: {{ $('Process AI Analysis').item.json.enrichedService.name }}\nFramework: {{ $('Process AI Analysis').item.json.enrichedService.template.framework }}\nLanguage: {{ $('Process AI Analysis').item.json.enrichedService.template.language }}\n\nTechnical Spec: {{ JSON.stringify($('Process AI Analysis').item.json.enrichedService.technicalSpec) }}\n\nRequirements: {{ $('Process AI Analysis').item.json.enrichedService.requirements }}\n\nGenerate:\n1. Main application files\n2. Package.json/dependencies\n3. Dockerfile\n4. Kubernetes manifests\n5. CI/CD pipeline\n6. Tests\n7. Documentation\n\nReturn as JSON with file paths as keys and content as values."
+            }
+          ]
+        }
+      },
+      "id": "ai-generate-code",
+      "name": "AI: Generate Code",
+      "type": "@n8n/n8n-nodes-langchain.openAi", 
+      "typeVersion": 1,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "repository",
+        "operation": "create",
+        "owner": "msdp-platform",
+        "repository": "{{ $('Process AI Analysis').item.json.enrichedService.repoName }}",
+        "additionalFields": {
+          "description": "{{ $('Process AI Analysis').item.json.enrichedService.requirements }}",
+          "private": false,
+          "autoInit": true
+        }
+      },
+      "id": "create-github-repo",
+      "name": "Create GitHub Repository",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse generated code and prepare for GitHub commits\nconst codeResponse = $('AI: Generate Code').item.json.message.content;\nconst serviceData = $('Process AI Analysis').item.json.enrichedService;\n\nlet generatedFiles;\ntry {\n  generatedFiles = JSON.parse(codeResponse);\n} catch (e) {\n  // Fallback structure if AI doesn't return valid JSON\n  generatedFiles = {\n    'README.md': `# ${serviceData.name}\\n\\n${serviceData.requirements}`,\n    'package.json': JSON.stringify({\n      name: serviceData.repoName,\n      version: '1.0.0',\n      description: serviceData.requirements,\n      main: 'index.js'\n    }, null, 2)\n  };\n}\n\n// Prepare commit data\nconst commits = [];\nfor (const [filePath, content] of Object.entries(generatedFiles)) {\n  commits.push({\n    path: filePath,\n    content: typeof content === 'string' ? content : JSON.stringify(content, null, 2),\n    message: `feat: Add ${filePath}`\n  });\n}\n\nreturn { \n  commits,\n  repoUrl: `https://github.com/msdp-platform/${serviceData.repoName}`,\n  serviceData\n};"
+      },
+      "id": "prepare-code-commits",
+      "name": "Prepare Code Commits",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "split-commits",
+      "name": "Split Commits",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [2000, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "create",
+        "owner": "msdp-platform",
+        "repository": "{{ $('Prepare Code Commits').item.json.serviceData.repoName }}",
+        "filePath": "{{ $item.path }}",
+        "fileContent": "{{ $item.content }}",
+        "commitMessage": "{{ $item.message }}"
+      },
+      "id": "commit-files",
+      "name": "Commit Files to GitHub",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "requestMethod": "POST",
+        "url": "https://api.getport.io/v1/entities/service",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization", 
+              "value": "Bearer {{ $vars.PORT_IO_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "identifier",
+              "value": "{{ $('Prepare Code Commits').item.json.serviceData.repoName }}"
+            },
+            {
+              "name": "title",
+              "value": "{{ $('Prepare Code Commits').item.json.serviceData.name }}"
+            },
+            {
+              "name": "properties",
+              "value": "={{ {\n  name: $('Prepare Code Commits').item.json.serviceData.name,\n  type: $('Prepare Code Commits').item.json.serviceData.type,\n  description: $('Prepare Code Commits').item.json.serviceData.requirements,\n  team: $('Prepare Code Commits').item.json.serviceData.team,\n  environment: $('Prepare Code Commits').item.json.serviceData.environment,\n  status: 'deployed',\n  repository_url: $('Prepare Code Commits').item.json.repoUrl,\n  deployment_url: `https://${$('Prepare Code Commits').item.json.serviceData.name}.${$('Prepare Code Commits').item.json.serviceData.environment}.aztech-msdp.com`,\n  generated_at: $('Prepare Code Commits').item.json.serviceData.startTime,\n  generation_time: Math.round((new Date() - new Date($('Prepare Code Commits').item.json.serviceData.startTime)) / 60000)\n} }}"
+            }
+          ]
+        }
+      },
+      "id": "create-port-service",
+      "name": "Create Port.io Service",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [2440, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  success: true,\n  service: {\n    name: $('Prepare Code Commits').item.json.serviceData.name,\n    repository: $('Prepare Code Commits').item.json.repoUrl,\n    status: 'deployed',\n    generationTime: Math.round((new Date() - new Date($('Prepare Code Commits').item.json.serviceData.startTime)) / 60000)\n  },\n  message: 'Service generated successfully in ' + Math.round((new Date() - new Date($('Prepare Code Commits').item.json.serviceData.startTime)) / 60000) + ' minutes'\n} }}"
+      },
+      "id": "success-response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [2660, 300]
+    }
+  ],
+  "connections": {
+    "Port.io Service Request": {
+      "main": [
+        [
+          {
+            "node": "Parse Service Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Service Request": {
+      "main": [
+        [
+          {
+            "node": "Update Status: Generating", 
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status: Generating": {
+      "main": [
+        [
+          {
+            "node": "AI: Analyze Requirements",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI: Analyze Requirements": {
+      "main": [
+        [
+          {
+            "node": "Process AI Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process AI Analysis": {
+      "main": [
+        [
+          {
+            "node": "AI: Generate Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI: Generate Code": {
+      "main": [
+        [
+          {
+            "node": "Create GitHub Repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create GitHub Repository": {
+      "main": [
+        [
+          {
+            "node": "Prepare Code Commits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Code Commits": {
+      "main": [
+        [
+          {
+            "node": "Split Commits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Commits": {
+      "main": [
+        [
+          {
+            "node": "Commit Files to GitHub",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commit Files to GitHub": {
+      "main": [
+        [
+          {
+            "node": "Create Port.io Service",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Port.io Service": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
