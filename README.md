@@ -6,15 +6,11 @@
 
 ## 🎯 **Quick Start - Essential Documents**
 
-### **🏗️ [Master Technology Overview](./MSDP_MASTER_TECHNOLOGY_OVERVIEW.md)**
+### **⭐ [MSDP Platform Overview — Canonical Reference](./MSDP_PLATFORM_OVERVIEW.md)**
 
-**→ START HERE** - Complete architecture, technology stack, and implementation guide
+**→ START HERE.** The single source of truth: the researcher → board → pilot operating model, the self-owned Claude + open-source architecture (no n8n/Port.io), an honest built-vs-conceptual status, and the repo-to-stage map. If any other doc conflicts with this one, this one wins.
 
-- Complete technology flowchart with AI integration
-- 9 repository ecosystem overview
-- Multi-cloud architecture (Azure + AWS)
-- N8N + AI agent integration
-- Practical deployment examples
+> The former "Master Technology Overview" and several other docs are **superseded** — they describe an earlier n8n/Port.io, fully-autonomous framing. They are kept for history but are no longer authoritative.
 
 ### **💼 [Business Requirements](./VENDABUDDY_BUSINESS_REQUIREMENTS.md)**
 
